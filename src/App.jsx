@@ -5,17 +5,18 @@ const App = () => {
       {/* Search section*/}
       <div className="search-section">
         <form action="#" className="search-form">
-          <img src="assets/search_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="" />          
-          <input type="search" placeholder="Enter a city name"
-           className="search-input" required />
+        <span class="material-symbols-rounded">search</span>
+           <input type="search" placeholder="Enter a city name" className="search-input" required />
         </form>
         <button className="location-button">
-           <span class="material-symbols-rounded">my_location</span>
+        <span class="material-symbols-outlined">
+my_location
+</span>
         </button>
       </div>
 
 
-      {/* Search section*/}
+      {/* Weather section*/}
       <div className="weather-section">
         <div className="current-weather">
           <img src="icons/clouds.svg" className="weather-icon" />
