@@ -8,6 +8,7 @@ Features
     Location-Based Weather: Automatically fetch weather updates for your current location using geolocation.
     Search Functionality: Find weather details for any place by searching its name.
 
+
 Installation
 
     Clone this repository:
