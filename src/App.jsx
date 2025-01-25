@@ -3,11 +3,14 @@ import CurrentWeather from "./components/CurrentWeather";
 import HourlyWeatherItem from "./components/HourlyWeatherItem";
 
 const App = () => {
+  const getWeatherDetails = (API_URL) => {
+
+  }
 
   return(
     <div className="container">
       {/* Search section*/}
-     <SearchSection />
+     <SearchSection getWeatherDetails={getWeatherDetails} />
      
 
 

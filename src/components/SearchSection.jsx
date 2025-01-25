@@ -1,9 +1,13 @@
 
-const SearchSection = () => {
+const SearchSection = ({getWeatherDetails}) => {
+    const API_KEY = import.meta.env.VITE_API_KEY;
+
+// handles city search from submission
     const handleCitySearch = (e) =>{
         e.preventDefault();
         const searchInput = e.target.querySelector(".search-input");
-        console.log(searchInput.value);
+        const API_URL = 'http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${searchInput.value}';
+        getWeatherDetails(API_URL); //fetches weather details for entered city
     }
 
   return (
