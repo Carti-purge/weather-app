@@ -1,6 +1,7 @@
 import SearchSection from "./components/SearchSection";
 import CurrentWeather from "./components/CurrentWeather";
 import HourlyWeatherItem from "./components/HourlyWeatherItem";
+import GitHubLink from "./github";
 import { useEffect, useState } from "react";
 import { weatherCodes } from "./constants";
 import React, { useRef } from 'react';
@@ -93,8 +94,12 @@ const App = () => {
      )
     }
 
+    <div className="footer">
+        <GitHubLink />
+      </div>
      
     </div>
+    
   )
 
 };

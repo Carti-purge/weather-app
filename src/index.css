@@ -215,3 +215,12 @@ body{
     }
 
 }
+
+.footer{
+    font-size: 0.8rem;
+    padding: 10px;
+    color: #a7a5a5;
+    text-align: center;
+    cursor: pointer;
+
+}
