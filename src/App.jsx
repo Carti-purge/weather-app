@@ -1,9 +1,28 @@
 import SearchSection from "./components/SearchSection";
 import CurrentWeather from "./components/CurrentWeather";
 import HourlyWeatherItem from "./components/HourlyWeatherItem";
+import { useState } from "react";
+import { weatherCodes } from "./constants";
 
 const App = () => {
-  const getWeatherDetails = (API_URL) => {
+  const [currentWeather, setCurrentWeather] = useState({});
+
+  // fetches weather details based on the API URL
+  const getWeatherDetails = async (API_URL) => {
+    try{
+      const response = await fetch(API_URL);
+      const data = await response.json();
+
+      // extract current weather
+      const temperature = Math.floor(data.current.temp_c);
+      const description = data.current.condition.text;
+      const weatherIcon = Object.keys(weatherCodes).find(icon => weatherCodes[icon].includes(data.current.condition.code));
+
+      setCurrentWeather({temperature, description, weatherIcon})
+    }
+    catch(error){
+      console.log(error);
+    }
 
   }
 
@@ -17,7 +36,7 @@ const App = () => {
       {/* Weather section*/}
       <div className="weather-section">
         
-        <CurrentWeather />
+        <CurrentWeather currentWeather={currentWeather}/>
         
 
         {/* hourly forecast */}
