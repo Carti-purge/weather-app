@@ -1,14 +1,17 @@
 import SearchSection from "./components/SearchSection";
 import CurrentWeather from "./components/CurrentWeather";
 import HourlyWeatherItem from "./components/HourlyWeatherItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { weatherCodes } from "./constants";
 import React, { useRef } from 'react';
+import NoResultsDiv from "./components/NoResultsDiv";
 
 
 const App = () => {
+  const API_KEY = import.meta.env.VITE_API_KEY;
   const [currentWeather, setCurrentWeather] = useState({});
   const [hourlyForecasts, setHourlyForecasts] = useState([]);
+  const [hasNoResults, setHasNoResults] = useState(false);
   const searchInputRef = useRef(null);
 
 
@@ -27,9 +30,13 @@ const App = () => {
 
 
   // fetches weather details based on the API URL
-  const getWeatherDetails = async (API_URL) => {
+  const getWeatherDetails = async (API_URL) => { 
+    setHasNoResults(false);
+    window.innerWidth <= 768 && searchInputRef.current.focus();
+
     try{
       const response = await fetch(API_URL);
+      if(!response.ok) throw new Error();
       const data = await response.json();
 
       // extract current weather
@@ -45,11 +52,19 @@ const App = () => {
       searchInputRef.current.value = data.location.name;
       filterHourlyForecast(combinedHourlyData);
     }
-    catch(error){
-      console.log(error); 
+    catch{
+      // set setHasNoResults state if there's an error
+      setHasNoResults(true);
     }
 
-  }
+  };
+
+// fetch default city(Addis Abeba) weather data on initial render
+  useEffect(() => {
+    const defaultCity = "Addis Abeba";
+    const API_URL = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${defaultCity}&days=2`;
+    getWeatherDetails(API_URL);
+  }, []);
 
   return(
     <div className="container">
@@ -57,22 +72,28 @@ const App = () => {
      <SearchSection getWeatherDetails={getWeatherDetails} searchInputRef={searchInputRef}/>
      
 
-
-      {/* Weather section*/}
+     {/* conditionally render based on hasNO=oResults state */}
+     {hasNoResults ?(
+      <NoResultsDiv />
+     ): (
       <div className="weather-section">
         
-        <CurrentWeather currentWeather={currentWeather}/>
-        
+      <CurrentWeather currentWeather={currentWeather}/>
+      
 
-        {/* hourly forecast */}
-        <div className="hourly-forecast">
-          <ul className="weather-list">
-            {hourlyForecasts.map(hourlyWeather =>(
-              <HourlyWeatherItem key={hourlyWeather.time_epoch} hourlyWeather={hourlyWeather}/>
-            ))}
-          </ul>
-        </div>
+      {/* hourly forecast */}
+      <div className="hourly-forecast">
+        <ul className="weather-list">
+          {hourlyForecasts.map(hourlyWeather =>(
+            <HourlyWeatherItem key={hourlyWeather.time_epoch} hourlyWeather={hourlyWeather}/>
+          ))}
+        </ul>
       </div>
+    </div>
+     )
+    }
+
+     
     </div>
   )
 
