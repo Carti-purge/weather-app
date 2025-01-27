@@ -13,7 +13,7 @@ body{
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: linear-gradient(#1daa01fd, #f5f231, #e92323);
+    background: linear-gradient(#ddf5cd, #024d1efd);
 }
 
 #root{
@@ -27,7 +27,7 @@ body{
     z-index: 1;
     border-radius: 10px;
     max-width: 410px;
-    background: linear-gradient(#282c6b, #010229);
+    background: linear-gradient(#171d12, #01200a);
     box-shadow: 0 10px 20px rgba( 0, 0, 0, 0.1);
 }
 
